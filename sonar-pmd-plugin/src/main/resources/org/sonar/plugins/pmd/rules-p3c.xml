@@ -247,6 +247,30 @@
     </rule>
     <rule key="CheckNullAfterMapGetRule">
         <priority>CRITICAL</priority>
-        <configKey><![CDATA[rulesets/java/ali-set.xml/CheckNullAfterMapGetRule]]></configKey>
+        <configKey><![CDATA[net.sourceforge.pmd.lang.rule.XPathRule]]></configKey>
+        <name>Always check for null after retrieving a value from a Map</name>
+        <description>When retrieving values from a Map using methods like get(), getOrDefault(), or similar, you should always check if the returned value is null before using it to avoid NullPointerExceptions.</description>
+        <param>
+            <key>xpath</key>
+            <description>XPath expression</description>
+            <defaultValue><![CDATA[
+                //PrimaryExpression[
+                  PrimaryPrefix/Name[ends-with(@Image, '.get')] or
+                  PrimarySuffix[@Image='get']
+                ]/following::PrimaryExpression[
+                  ./PrimaryPrefix/Name[
+                    substring-after(@Image, '.') != 'equals' and
+                    substring-after(@Image, '.') != 'isPresent' and
+                    not(contains(@Image, ' == null')) and
+                    not(contains(@Image, ' != null'))
+                  ]
+                ]
+            ]]></defaultValue>
+        </param>
+        <param>
+            <key>message</key>
+            <description>The violation message</description>
+            <defaultValue>Always check for null after retrieving a value from a Map</defaultValue>
+        </param>
     </rule>
 </rules>
