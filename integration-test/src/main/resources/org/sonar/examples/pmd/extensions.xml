@@ -64,4 +64,12 @@
     <priority>CRITICAL</priority>
     <description>IOException should not directly or indirectly be extended</description>
   </rule>
+  <!-- Custom rule to check for null after map.get() -->
+  <rule>
+    <key>CheckNullAfterMapGetRule</key>
+    <name>Always check for null after retrieving a value from a Map</name>
+    <configKey>org/sonar/examples/pmd/rulesets.xml/CheckNullAfterMapGetRule</configKey>
+    <priority>CRITICAL</priority>
+    <description>When retrieving values from a Map using methods like get(), getOrDefault(), or similar, you should always check if the returned value is null before using it to avoid NullPointerExceptions.</description>
+  </rule>
 </rules>

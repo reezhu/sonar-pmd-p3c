@@ -1,0 +1,47 @@
+<h2>Always check for null after retrieving a value from a Map</h2>
+
+<p>
+When retrieving values from a Map using methods like <code>get()</code>, <code>getOrDefault()</code>, or similar, 
+you should always check if the returned value is null before using it to avoid NullPointerExceptions.
+</p>
+
+<h3>Noncompliant Code Example</h3>
+<pre>
+Map&lt;String, User&gt; userMap = new HashMap&lt;&gt;();
+// ...
+User user = userMap.get("userId");
+String userName = user.getName(); // Potential NullPointerException if user is null
+</pre>
+
+<h3>Compliant Code Example</h3>
+<pre>
+Map&lt;String, User&gt; userMap = new HashMap&lt;&gt;();
+// ...
+User user = userMap.get("userId");
+if (user != null) {
+    String userName = user.getName(); // Safe, we've checked for null
+}
+</pre>
+
+<h3>Alternative Compliant Example</h3>
+<pre>
+Map&lt;String, User&gt; userMap = new HashMap&lt;&gt;();
+// ...
+// Using Java 8+ Optional
+Optional.ofNullable(userMap.get("userId"))
+        .ifPresent(user -> {
+            String userName = user.getName();
+            // Process userName
+        });
+
+// Using getOrDefault
+User user = userMap.getOrDefault("userId", new User("Default"));
+String userName = user.getName(); // Safe, we've provided a default
+</pre>
+
+<h3>Why This Rule Is Important</h3>
+<p>
+Maps in Java return null when a key is not found. Failing to check for null before accessing properties or methods 
+of the returned object is a common source of NullPointerExceptions in production code. This rule helps prevent 
+such runtime errors by enforcing proper null checking after map operations.
+</p>

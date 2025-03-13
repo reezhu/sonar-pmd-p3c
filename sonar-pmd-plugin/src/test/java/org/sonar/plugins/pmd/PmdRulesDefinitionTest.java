@@ -45,7 +45,7 @@ class PmdRulesDefinitionTest {
 
         List<Rule> rules = repository.rules();
 //        assertThat(rules).hasSize(268);
-        assertThat(rules).hasSize(321);
+        assertThat(rules).hasSize(325);
 
         for (Rule rule : rules) {
             assertThat(rule.key()).isNotNull();
@@ -85,5 +85,20 @@ class PmdRulesDefinitionTest {
         Rule xpathRule = Iterables.find(repository.rules(), rule -> rule.key().equals("XPathRule"));
 
         assertThat(xpathRule.param("xpath").type().type()).isEqualTo(PropertyType.TEXT.name());
+    }
+    
+    @Test
+    void should_have_check_null_after_map_get_rule() {
+        PmdRulesDefinition definition = new PmdRulesDefinition();
+        RulesDefinition.Context context = new RulesDefinition.Context();
+        definition.define(context);
+        RulesDefinition.Repository repository = context.repository(PmdConstants.REPOSITORY_KEY);
+
+        Rule checkNullRule = Iterables.find(repository.rules(), rule -> rule.key().equals("CheckNullAfterMapGetRule"));
+        
+        assertThat(checkNullRule).isNotNull();
+        assertThat(checkNullRule.name()).isEqualTo("[p3c]Always check for null after retrieving a value from a Map.");
+        assertThat(checkNullRule.severity()).isEqualTo("CRITICAL");
+        assertThat(checkNullRule.htmlDescription()).isNotEmpty();
     }
 }

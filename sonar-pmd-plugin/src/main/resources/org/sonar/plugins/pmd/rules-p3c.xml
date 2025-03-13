@@ -245,4 +245,8 @@
         <priority>MAJOR</priority>
         <configKey><![CDATA[rulesets/java/ali-set.xml/CollectionInitShouldAssignCapacityRule]]></configKey>
     </rule>
+    <rule key="CheckNullAfterMapGetRule">
+        <priority>CRITICAL</priority>
+        <configKey><![CDATA[org/sonar/examples/pmd/rulesets.xml/CheckNullAfterMapGetRule]]></configKey>
+    </rule>
 </rules>

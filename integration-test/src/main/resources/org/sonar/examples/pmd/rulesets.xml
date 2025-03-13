@@ -77,4 +77,47 @@
       ]]>
     </example>
   </rule>
+  <rule name="CheckNullAfterMapGetRule"
+        message="Always check for null after retrieving a value from a Map"
+        class="net.sourceforge.pmd.lang.rule.XPathRule"
+        language="java">
+    <description>
+      When retrieving values from a Map using methods like get(), getOrDefault(), or similar,
+      you should always check if the returned value is null before using it to avoid NullPointerExceptions.
+    </description>
+    <properties>
+      <property name="xpath">
+        <value>
+          <![CDATA[
+            //PrimaryExpression[
+              PrimaryPrefix/Name[ends-with(@Image, '.get')] or
+              PrimarySuffix[@Image='get']
+            ]/following::PrimaryExpression[
+              ./PrimaryPrefix/Name[
+                substring-after(@Image, '.') != 'equals' and
+                substring-after(@Image, '.') != 'isPresent' and
+                not(contains(@Image, ' == null')) and
+                not(contains(@Image, ' != null'))
+              ]
+            ]
+          ]]>
+        </value>
+      </property>
+    </properties>
+    <example>
+      <![CDATA[
+        // Non-compliant code
+        Map<String, User> userMap = new HashMap<>();
+        User user = userMap.get("userId");
+        String userName = user.getName(); // Potential NullPointerException if user is null
+        
+        // Compliant code
+        Map<String, User> userMap = new HashMap<>();
+        User user = userMap.get("userId");
+        if (user != null) {
+            String userName = user.getName(); // Safe, we've checked for null
+        }
+      ]]>
+    </example>
+  </rule>
 </ruleset>
