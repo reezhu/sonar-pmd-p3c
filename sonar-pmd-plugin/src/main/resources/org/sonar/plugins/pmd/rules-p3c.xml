@@ -247,6 +247,6 @@
     </rule>
     <rule key="CheckNullAfterMapGetRule">
         <priority>CRITICAL</priority>
-        <configKey><![CDATA[org/sonar/examples/pmd/rulesets.xml/CheckNullAfterMapGetRule]]></configKey>
+        <configKey><![CDATA[rulesets/java/ali-set.xml/CheckNullAfterMapGetRule]]></configKey>
     </rule>
 </rules>
